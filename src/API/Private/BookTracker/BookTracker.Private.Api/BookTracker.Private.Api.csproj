@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookTracker.Persistence\BookTracker.Persistence.csproj" />
+    <ProjectReference Include="..\BookTracker.BusinessLogic\BookTracker.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>
