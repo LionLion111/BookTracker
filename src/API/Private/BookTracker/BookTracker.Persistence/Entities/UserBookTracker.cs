@@ -2,11 +2,11 @@
 
 public class UserBookTracker
 {
-    public Guid Id { get; set; }
-    public int PageCount { get; set; }
+    public int Id { get; set; }    
     public DateTime CreatedDateTime { get; set; }
-
-    public Guid UserId { get; set; }
-    public string BookId { get; set; } = string.Empty;
+    public DateTime FinishedDateTime { get; set; }
+    public int PageCount { get; set; }
+    public long UserId { get; set; }
+    public long BookId { get; set; } 
     public UserBook? UserBook { get; set; }
 }

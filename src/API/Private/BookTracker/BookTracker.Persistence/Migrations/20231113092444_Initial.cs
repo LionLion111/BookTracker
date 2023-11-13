@@ -17,7 +17,8 @@ namespace BookTracker.Persistence.Migrations
                 name: "Author",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -39,6 +40,18 @@ namespace BookTracker.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Language",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Language", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Mood",
                 columns: table => new
                 {
@@ -55,7 +68,8 @@ namespace BookTracker.Persistence.Migrations
                 name: "Publisher",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -93,15 +107,18 @@ namespace BookTracker.Persistence.Migrations
                 name: "Book",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Format = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PublisherYear = table.Column<int>(type: "int", nullable: false),
                     PageCount = table.Column<int>(type: "int", nullable: false),
-                    PublisherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    PublisherId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false),
+                    LanguageId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,20 +128,27 @@ namespace BookTracker.Persistence.Migrations
                         column: x => x.GenreId,
                         principalTable: "Genre",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Book_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Book_Publisher_PublisherId",
                         column: x => x.PublisherId,
                         principalTable: "Publisher",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Login = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -140,15 +164,15 @@ namespace BookTracker.Persistence.Migrations
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "BookAuthor",
                 columns: table => new
                 {
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BookId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    BookId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,12 +195,12 @@ namespace BookTracker.Persistence.Migrations
                 name: "UserBook",
                 columns: table => new
                 {
-                    BookId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     PageCount = table.Column<int>(type: "int", nullable: false),
                     DesiredFinishDate = table.Column<DateTime>(type: "date", nullable: false),
-                    CreatedDinishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDinishDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,7 +210,7 @@ namespace BookTracker.Persistence.Migrations
                         column: x => x.BookId,
                         principalTable: "Book",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserBook_User_UserId",
                         column: x => x.UserId,
@@ -199,21 +223,22 @@ namespace BookTracker.Persistence.Migrations
                 name: "UserBookTracker",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PageCount = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    BookId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BookId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    FinishedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PageCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserBookTracker", x => x.Id);
+                    table.PrimaryKey("PK_UserBookTracker", x => new { x.Id, x.BookId, x.UserId });
                     table.ForeignKey(
                         name: "FK_UserBookTracker_UserBook_BookId_UserId",
                         columns: x => new { x.BookId, x.UserId },
                         principalTable: "UserBook",
                         principalColumns: new[] { "BookId", "UserId" },
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -283,6 +308,11 @@ namespace BookTracker.Persistence.Migrations
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Book_LanguageId",
+                table: "Book",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Book_PublisherId",
                 table: "Book",
                 column: "PublisherId");
@@ -337,6 +367,9 @@ namespace BookTracker.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Genre");
+
+            migrationBuilder.DropTable(
+                name: "Language");
 
             migrationBuilder.DropTable(
                 name: "Publisher");

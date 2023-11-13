@@ -24,9 +24,11 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.Author", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -40,8 +42,11 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.Book", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
@@ -66,8 +71,8 @@ namespace BookTracker.Persistence.Migrations
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PublisherId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("PublisherId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PublisherYear")
                         .HasColumnType("int");
@@ -93,11 +98,11 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.BookAuthor", b =>
                 {
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("BookId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("BookId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AuthorId", "BookId");
 
@@ -248,7 +253,7 @@ namespace BookTracker.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("languages");
+                    b.ToTable("Language");
                 });
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.Mood", b =>
@@ -293,9 +298,11 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.Publisher", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -344,9 +351,11 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -385,13 +394,13 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.UserBook", b =>
                 {
-                    b.Property<string>("BookId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("BookId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedDinishDate")
+                    b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DesiredFinishDate")
@@ -400,7 +409,7 @@ namespace BookTracker.Persistence.Migrations
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedDinishDate")
+                    b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("BookId", "UserId");
@@ -452,24 +461,25 @@ namespace BookTracker.Persistence.Migrations
 
             modelBuilder.Entity("BookTracker.Persistence.Entities.UserBookTracker", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("BookId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("BookId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FinishedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "BookId", "UserId");
 
                     b.HasIndex("BookId", "UserId");
 
@@ -481,7 +491,7 @@ namespace BookTracker.Persistence.Migrations
                     b.HasOne("BookTracker.Persistence.Entities.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BookTracker.Persistence.Entities.Language", "Language")
@@ -493,7 +503,7 @@ namespace BookTracker.Persistence.Migrations
                     b.HasOne("BookTracker.Persistence.Entities.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Genre");
@@ -527,7 +537,7 @@ namespace BookTracker.Persistence.Migrations
                     b.HasOne("BookTracker.Persistence.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -538,7 +548,7 @@ namespace BookTracker.Persistence.Migrations
                     b.HasOne("BookTracker.Persistence.Entities.Book", "Book")
                         .WithMany("UserBooks")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BookTracker.Persistence.Entities.User", "User")
@@ -557,7 +567,7 @@ namespace BookTracker.Persistence.Migrations
                     b.HasOne("BookTracker.Persistence.Entities.UserBook", "UserBook")
                         .WithMany("UserBookTrackers")
                         .HasForeignKey("BookId", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("UserBook");

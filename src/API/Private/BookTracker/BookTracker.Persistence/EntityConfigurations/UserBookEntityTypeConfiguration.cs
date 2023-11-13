@@ -11,14 +11,14 @@ public class UserBookEntityTypeConfiguration : IEntityTypeConfiguration<UserBook
         builder.HasKey(x => new {x.BookId, x.UserId});
         builder.Property(x => x.PageCount).IsRequired();
         builder.Property(x => x.DesiredFinishDate).HasColumnType("date").IsRequired();
-        builder.Property(x => x.CreatedDinishDate).IsRequired();
-        builder.Property(x => x.UpdatedDinishDate).IsRequired(false);
+        builder.Property(x => x.CreatedDateTime).IsRequired();
+        builder.Property(x => x.UpdatedDateTime).IsRequired(false);
 
         builder
             .HasOne(x => x.Book)
             .WithMany(x => x.UserBooks)
             .HasForeignKey(x => x.BookId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder
            .HasOne(x => x.User)

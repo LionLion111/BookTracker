@@ -6,7 +6,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
     {
-        services.AddMediator();
+        services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Scoped);
         return services; 
     }
 }

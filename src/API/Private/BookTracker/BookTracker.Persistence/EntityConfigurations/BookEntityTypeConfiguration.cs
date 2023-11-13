@@ -21,12 +21,12 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             .HasOne(x => x.Publisher)
             .WithMany(x => x.Books)
             .HasForeignKey(x => x.PublisherId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder
             .HasOne(x => x.Genre)
             .WithMany(x => x.Books)
             .HasForeignKey(x => x.GenreId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

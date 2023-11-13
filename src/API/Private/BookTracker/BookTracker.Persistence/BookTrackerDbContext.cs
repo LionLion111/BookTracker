@@ -29,10 +29,5 @@ public class BookTrackerDbContext : DbContext, IBookTrackerDbContext
 	{
 		base.OnModelCreating(modelBuilder);
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookTrackerDbContext).Assembly);
-    }
-
-    Task<int> IBookTrackerDbContext.SaveChangesAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    }    
 }
