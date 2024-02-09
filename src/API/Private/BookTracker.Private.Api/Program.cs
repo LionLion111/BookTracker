@@ -1,12 +1,10 @@
 using BookTracker.BusinessLogic.Extensions;
 using BookTracker.Persistence;
 using BookTracker.Persistence.Extensions;
+using BookTracker.Private.Api.Middlewares.ErrorHandling;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<BookTrackerDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -18,6 +16,7 @@ builder.Services.AddPersistence(connectionString);
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();

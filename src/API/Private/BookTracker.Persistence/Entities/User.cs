@@ -8,9 +8,8 @@ public class User
     public string PasswordHash { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-
     public int RoleId { get; set; }
+    
     public Role? Role { get; set; }
-
     public IEnumerable<UserBook>? UserBooks { get; set; }
 }

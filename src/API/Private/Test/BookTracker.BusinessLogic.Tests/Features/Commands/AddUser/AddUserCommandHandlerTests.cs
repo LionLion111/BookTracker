@@ -14,11 +14,12 @@ public class AddUserCommandHandlerTests : TestBase
     private IPasswordService _passwordService = null!;
     private AddUserCommandHandler _handler = null!;
 
-    public override void SetUp() {
+    public override void SetUp() 
+    {
         base.SetUp();
 
         _passwordService = Substitute.For<IPasswordService>();
-        _handler = new AddUserCommandHandler(DbContext, _passwordService);
+        _handler = new AddUserCommandHandler(DbContextFactory, _passwordService);
     }
 
     [Test]

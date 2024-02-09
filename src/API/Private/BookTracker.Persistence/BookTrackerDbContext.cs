@@ -1,10 +1,9 @@
 ﻿using BookTracker.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace BookTracker.Persistence;
 
-public class BookTrackerDbContext : DbContext, IBookTrackerDbContext
+public class BookTrackerDbContext : DbContext
 {
 	
 	public BookTrackerDbContext(DbContextOptions<BookTrackerDbContext> options) : base(options)

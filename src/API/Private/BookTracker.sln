@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookTracker.BusinessLogic",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{0398DE44-A853-45D9-9268-350573915DB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookTracker.BusinessLogic.Tests", "Test\BookTracker.BusinessLogic.Tests\BookTracker.BusinessLogic.Tests.csproj", "{0C2E5C23-FCE0-4D8A-B417-80878AB325B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookTracker.BusinessLogic.Tests", "Test\BookTracker.BusinessLogic.Tests\BookTracker.BusinessLogic.Tests.csproj", "{0C2E5C23-FCE0-4D8A-B417-80878AB325B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookTracker.Private.Api.Tests", "Test\BookTracker.Private.Api.Tests\BookTracker.Private.Api.Tests.csproj", "{E35EAF05-288A-41ED-8D94-81BDA5FD926E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +37,17 @@ Global
 		{0C2E5C23-FCE0-4D8A-B417-80878AB325B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C2E5C23-FCE0-4D8A-B417-80878AB325B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C2E5C23-FCE0-4D8A-B417-80878AB325B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E35EAF05-288A-41ED-8D94-81BDA5FD926E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E35EAF05-288A-41ED-8D94-81BDA5FD926E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E35EAF05-288A-41ED-8D94-81BDA5FD926E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E35EAF05-288A-41ED-8D94-81BDA5FD926E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C2E5C23-FCE0-4D8A-B417-80878AB325B0} = {0398DE44-A853-45D9-9268-350573915DB8}
+		{E35EAF05-288A-41ED-8D94-81BDA5FD926E} = {0398DE44-A853-45D9-9268-350573915DB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0F3943C-E9F7-4145-9DDB-1710112A7E34}
