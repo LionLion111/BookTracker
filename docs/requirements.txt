@@ -27,4 +27,3 @@ Moderator
 6. Get list of books
 7. Get book details
 8. Review new book requests
-
